@@ -1,6 +1,6 @@
 import express from 'express';
 import db from './db.js'; // Assurez-vous d'avoir correctement configuré votre connexion SQLite
-import './initDb.js'; // Exécute les scripts d'initialisation de la DB au démarrage
+// import './initDb.js'; // Exécute les scripts d'initialisation de la DB au démarrage
 
 const app = express();
 app.use(express.json());
