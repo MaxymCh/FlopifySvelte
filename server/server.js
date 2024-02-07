@@ -1,9 +1,13 @@
 import express from 'express';
+import cors from 'cors';
 import db from './db.js'; // Assurez-vous d'avoir correctement configuré votre connexion SQLite
 // import './initDb.js'; // Exécute les scripts d'initialisation de la DB au démarrage
 
 const app = express();
 app.use(express.json());
+
+// Active CORS pour toutes les requêtes
+app.use(cors());
 
 const PORT = 3000;
 
