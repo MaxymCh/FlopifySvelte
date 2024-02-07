@@ -23,7 +23,6 @@ db.exec(`CREATE TABLE IF NOT EXISTS musics (
   album_id INTEGER,
   FOREIGN KEY(album_id) REFERENCES albums(id)
 )`);
-
 db.exec(`CREATE TABLE IF NOT EXISTS playlists (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
@@ -45,6 +44,7 @@ CREATE TABLE IF NOT EXISTS albums (
   name TEXT NOT NULL,
   release_date TEXT,
   artist_id INTEGER,
+  url_image TEXT,
   FOREIGN KEY(artist_id) REFERENCES artists(id)
 )`);
 
