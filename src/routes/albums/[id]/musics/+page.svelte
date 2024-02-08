@@ -2,62 +2,77 @@
     import { onMount } from "svelte";
     import axios from "axios";
     import { page } from "$app/stores";
-    import type { MusicData } from "../../../../types"; // Assurez-vous que AlbumData est bien défini
-    import { goto } from "$app/navigation";
+    import type { MusicData, AlbumData } from "../../../../types"; // Assurez-vous que ces types sont bien définis
     import Music from "../../../../components/Music.svelte";
-
+  
     let musics: MusicData[] = [];
+    let album: AlbumData | null = null;
     let albumId: number | string;
-
+  
     $: albumId = $page.params.id;
-
+  
     onMount(async () => {
-        try {
-            const musicsResponse = await axios.get(
-                `http://localhost:3000/albums/${albumId}/musics`,
-            );
-            musics = musicsResponse.data;
-        } catch (error) {
-            console.error(
-                "Erreur lors de la récupération des données :",
-                error,
-            );
-        }
+      try {
+        const albumResponse = await axios.get(`http://localhost:3000/albums/${albumId}`);
+        album = albumResponse.data;
+        const musicsResponse = await axios.get(`http://localhost:3000/albums/${albumId}/musics`);
+        musics = musicsResponse.data;
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données :", error);
+      }
     });
-</script>
-
-<div class="content">
-    <div class="albums-container">
-        {#each musics as music}
-            <Music {music} />
-        {/each}
+  </script>
+  
+  {#if album}
+    <div class="album-header">
+      <img class="album-image" src={album.url_image} alt={album.name} />
+      <div class="album-details">
+        <h1>{album.name}</h1>
+        <p>{album.artist_name} · {album.release_date} · {musics.length} titres</p>
+      </div>
     </div>
-</div>
-
-<style>
+  {/if}
+  
+  <div class="musics-list">
+    {#each musics as music, index (music.music_id)}
+      <Music {music} index={index + 1} />
+    {/each}
+  </div>
+  
+  <style>
     .album-header {
-        text-align: center;
-        margin-bottom: 20px;
+      background-color: #8c67ab;
+      color: white;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
     }
-
+  
     .album-image {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px; /* Optionnel */
+      width: 200px; /* ou une autre taille appropriée */
+      height: 200px; /* ou une autre taille appropriée */
+      object-fit: cover;
+      border-radius: 4px;
     }
-
+  
+    .album-details h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+  
+    .album-details p {
+      margin: 0.5rem 0 0;
+      font-size: 1rem;
+    }
+  
     .musics-list {
-        display: flex;
-        flex-direction: column;
+      display: flex;
+      flex-direction: column;
+      margin-top: 1rem;
     }
-
-    .music-item {
-        cursor: pointer;
-        padding: 10px;
-        border-bottom: 1px solid #ccc;
-    }
-
-    .music-item:hover {
-        background-color: #f0f0f0;
-    }
-</style>
+  
+    /* Adaptation de vos styles Music existants */
+    /* Vous devez définir les styles pour le composant Music ici ou dans son fichier .svelte */
+  </style>
+  

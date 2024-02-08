@@ -106,14 +106,14 @@ app.get('/albums', (req, res) => {
     JOIN artists ON albums.artist_id = artists.id
   `);
     const albums = stmt.all();
-    console.log(albums);
     res.json(albums);
 });
 
 app.get('/albums/:id/musics', (req, res) => {
     const { id } = req.params;
     const stmt = db.prepare(`
-        SELECT musics.id AS music_id, musics.title, albums.name AS album_name, albums.url_image as url_image, artists.name AS artist_name
+        SELECT musics.id AS music_id, musics.title, albums.name AS album_name, albums.url_image as url_image,
+        artists.name AS artist_name, albums.release_date as albums_release_date
         FROM musics 
         JOIN albums ON musics.album_id = albums.id
         JOIN artists ON albums.artist_id = artists.id
@@ -126,6 +126,24 @@ app.get('/albums/:id/musics', (req, res) => {
         res.status(404).send('No musics found for this album');
     }
 });
+
+app.get('/albums/:id', (req, res) => {
+    const { id } = req.params;
+    const stmt = db.prepare(`
+        SELECT albums.id as albums_id, albums.name, albums.url_image, artists.name AS artist_name,
+        albums.release_date
+        FROM albums 
+        JOIN artists ON albums.artist_id = artists.id
+        WHERE albums.id = ?
+    `);
+    const album = stmt.get(id);
+    if (album) {
+        res.json(album);
+    } else {
+        res.status(404).send('No musics found for this album');
+    }
+});
+
 
 
 

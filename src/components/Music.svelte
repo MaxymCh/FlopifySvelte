@@ -1,47 +1,79 @@
 <script lang="ts">
-    import type { MusicData } from "../types"; // Assurez-vous que ce chemin correspond à l'emplacement de vos définitions de type
+    import type { MusicData } from "../types"; 
     export let music: MusicData;
-    export let index: number; // Pour afficher le numéro de la piste
+    export let index: number;
 </script>
 
-<tr class="music-item">
-    <td>
-        <div class="music-title">
-            {#if music.url_image}
-                <img
-                    class="album-cover"
-                    src={music.url_image}
-                    alt={`Couverture de l'album ${music.album_name}`}
-                />
-            {/if}
-            {music.title}
-        </div>
-    </td>
-    <td>{music.album_name}</td>
-    <!-- Supposons que duration est un champ disponible dans MusicData -->
-</tr>
+<div class="music-item">
+    <div class="track-number">{index}</div>
+    <div class="album-art">
+        {#if music.url_image}
+            <img src={music.url_image} alt={`Couverture de l'album ${music.album_name}`} />
+        {/if}
+    </div>
+    <div class="track-info">
+        <div class="track-title">{music.title}</div>
+        <div class="track-artist">{music.artist_name}</div>
+    </div>
+    <div class="album-info">
+        <div class="track-album">{music.album_name}</div>
+    </div>
+    <div class="album-date">
+        <div class="track-release-date">{music.albums_release_date}</div>
+    </div>
+</div>
 
 <style>
     .music-item {
-        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between; /* Ajouté pour espacer les éléments */
         padding: 10px;
         border-bottom: 1px solid #ccc;
     }
 
-    .music-item:hover {
-        background-color: #f0f0f0;
+    .track-number {
+        flex-basis: 10%;
+        text-align: center;
     }
 
-    .music-title {
-        display: flex;
-        align-items: center;
-        gap: 10px;
+    .album-art img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 50%;
+        flex-basis: 10%;
     }
 
-    .album-cover {
-        width: 40px; /* ou toute autre taille appropriée */
-        height: 40px; /* Maintenez le rapport d'aspect */
-        object-fit: cover; /* Assurez-vous que l'image couvre la zone sans être déformée */
-        border-radius: 4px; /* Optionnel: pour les coins arrondis */
+    .track-info {
+        flex-basis: 30%;
+    }
+
+    .track-title {
+        font-weight: bold;
+    }
+
+    .track-artist {
+        font-size: 0.9em;
+        color: #666;
+    }
+
+    .album-info {
+        flex-basis: 25%;
+        text-align: left;
+    }
+
+    .track-album {
+        font-weight: bold;
+    }
+
+    .album-date {
+        flex-basis: 25%;
+        text-align: right;
+    }
+
+    .track-release-date {
+        font-size: 0.9em;
+        color: #666;
     }
 </style>

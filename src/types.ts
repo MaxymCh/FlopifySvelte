@@ -13,6 +13,7 @@ export interface MusicData {
     album_name: string;
     url_image: string;
     artist_name: string;
+    albums_release_date: string;
 }
 
 
