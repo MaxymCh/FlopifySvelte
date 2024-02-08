@@ -3,7 +3,6 @@
 </script>
 
 <main>
-  <h1>Albums de musique</h1>
   <Albums />
 </main>
 
