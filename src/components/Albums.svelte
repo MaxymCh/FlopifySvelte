@@ -6,16 +6,34 @@
   import Navbar from "./Navbar.svelte";
   import Sidebar from "./Sidebar.svelte";
 
-  let albums: AlbumData[] = []; // Utilisation du type AlbumData pour la variable albums
+  let albums: AlbumData[] = [];
+  let currentPage = 1;
+  const albumsPerPage = 9; // Nombre d'albums à afficher par page
 
   onMount(async () => {
+    fetchAlbums();
+  });
+
+  async function fetchAlbums() {
     try {
-      const response = await axios.get("http://localhost:3000/albums");
+      const response = await axios.get(`http://localhost:3000/albums?page=${currentPage}&limit=${albumsPerPage}`);
       albums = response.data;
     } catch (error) {
       console.error("Erreur lors de la récupération des albums:", error);
     }
-  });
+  }
+
+  function nextPage() {
+    currentPage++;
+    fetchAlbums();
+  }
+
+  function previousPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      fetchAlbums();
+    }
+  }
 </script>
 
 <Navbar />
@@ -28,8 +46,14 @@
         <Album {album} />
       {/each}
     </div>
+    <div class="pagination">
+      <button on:click={previousPage}>Previous</button>
+      <span>Page {currentPage}</span>
+      <button on:click={nextPage}>Next</button>
+    </div>
   </div>
 </div>
+
 
 <style>
   .main-layout {
@@ -61,5 +85,29 @@
     justify-content: start; /* Aligner les éléments de grille au début du conteneur */
   }
 
-  /* Ajustez vos styles existants pour Sidebar et Album si nécessaire */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .pagination button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .pagination button:hover {
+    background-color: #0056b3;
+  }
+
+  .pagination span {
+    margin: 0 10px;
+    font-size: 18px;
+  }
 </style>
