@@ -58,31 +58,30 @@
 <style>
   .main-layout {
     display: flex;
-    min-height: 100vh; /* Hauteur minimum pour l'ensemble de la mise en page */
+    min-height: 100vh;
   }
 
   .sidebar {
-    width: 240px; /* Largeur fixe pour la sidebar */
+    width: 240px;
     background-color: #000;
     color: white;
-    /* Si vous souhaitez que la sidebar ait une hauteur qui s'adapte à son contenu plutôt qu'à l'écran : */
-    height: fit-content; /* ou auto, selon le comportement souhaité */
+    height: fit-content;
   }
 
   .content {
-    flex-grow: 1; /* Le contenu prend l'espace restant */
-    background-color: #fff; /* Ou toute autre couleur que vous souhaitez */
-    padding: 20px; /* Ajustez le padding comme nécessaire */
-    overflow-x: hidden; /* Empêche le défilement horizontal */
-    overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .albums-container {
     display: grid;
     margin: 1%;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px; /* Espacement entre les éléments de la grille */
-    justify-content: start; /* Aligner les éléments de grille au début du conteneur */
+    gap: 20px;
+    justify-content: start;
   }
 
   .pagination {

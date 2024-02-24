@@ -104,9 +104,9 @@ app.get("/artists/:id/musics", (req, res) => {
 });
 
 app.get("/albums", (req, res) => {
-  const page = parseInt(req.query.page) || 1; // Récupère le numéro de page à partir des paramètres de requête
-  const limit = parseInt(req.query.limit) || 9; // Récupère la limite d'éléments par page à partir des paramètres de requête
-  const offset = (page - 1) * limit; // Calcule l'offset en fonction du numéro de page et de la limite
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 9;
+  const offset = (page - 1) * limit;
 
   const stmt = db.prepare(`
         SELECT albums.id, albums.name, albums.release_date, albums.url_image, albums.artist_id, artists.name AS artist_name
