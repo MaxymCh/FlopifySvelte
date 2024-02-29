@@ -8,11 +8,11 @@ Avant de commencer, assurez-vous d'avoir installé Node.js sur votre machine. No
 Pour mettre en place l'environnement de développement de Flopify, suivez ces étapes :
 
 Installer les dépendances : 
-  - Ouvrez un terminal et exécutez la commande suivante pour installer les dépendances nécessaires au projet : npm install
-  - Lancer le serveur : Ouvrez un autre terminal et lancez le serveur en exécutant : node server/server.js
+  - Ouvrez un terminal et exécutez la commande suivante pour installer les dépendances nécessaires au projet : `npm install`
+  - Lancer l'API : Ouvrez un autre terminal et lancez l'API en exécutant : `node server/server.js`
 Cela démarrera le serveur backend de Flopify, permettant à l'application de traiter les requêtes.
 
-  - Lancer le client : Dans le premier terminal, lancez le client en exécutant : npm run dev
+  - Lancer le client : Dans le premier terminal, lancez le client en exécutant : `npm run dev`
 Cela compilera l'application Svelte et la rendra accessible via un navigateur web.
 
 ## Fonctionnalités
